@@ -13,6 +13,8 @@ class PostForm(forms.ModelForm):
             'pub_date',
             'title',
             'text',
+            'category',
+            'location',
             'image'
         )
         widgets = {

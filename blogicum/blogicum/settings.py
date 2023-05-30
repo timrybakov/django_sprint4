@@ -103,7 +103,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_FAILURE_VIEW = 'core.views.tr_handler403'
+CSRF_FAILURE_VIEW = 'pages.views.tr_handler403'
 
 INTERNAL_IPS = [
     '127.0.0.1',
@@ -112,3 +112,7 @@ INTERNAL_IPS = [
 LOGIN_REDIRECT_URL = 'blog:index'
 
 MEDIA_ROOT = BASE_DIR / 'media'
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+
+EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
