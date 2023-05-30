@@ -30,7 +30,7 @@ class PostListView(ListView):
     model = Post
     queryset = Post.new_objects.new_select_related().annotate(
         comment_count=Count('comments')
-        ).order_by('-pub_date')
+    ).order_by('-pub_date')
     template_name = 'blog/index.html'
     paginate_by = DEFAULT_VALUE
 
