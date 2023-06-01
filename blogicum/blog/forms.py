@@ -1,11 +1,23 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.utils import timezone
+
 from .models import Post, Comment
 
 User = get_user_model()
 
 
 class PostForm(forms.ModelForm):
+    pub_date = forms.DateTimeField(
+        widget=forms.DateTimeInput(
+            attrs={'type': 'datetime-local'},
+            format='%Y-%m-%dT%H:%M'
+        ),
+        initial=timezone.now,
+        label='Дата публикации',
+        help_text=('Если установить дату и время в будущем - '
+                   'можно делать отложенные публикации')
+    )
 
     class Meta:
         model = Post
@@ -18,7 +30,10 @@ class PostForm(forms.ModelForm):
             'image'
         )
         widgets = {
-            'pub_date': forms.DateInput(attrs={'type': 'date'})
+            'pub_date': forms.DateTimeInput(
+                format='%Y-%m-%dT%H:%M',
+                attrs={'type': 'datetime-local'}
+            )
         }
 
 
