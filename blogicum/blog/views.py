@@ -112,8 +112,8 @@ class ProfileListView(ListView):
             username=self.kwargs['username']
         )
         if user == self.request.user:
-            user_posts = Post.objects.select_related('author').filter(
-                author__username=self.kwargs['username']
+            user_posts = user.posts.select_related(
+                'location', 'category', 'author'
             ).annotate(
                 comment_count=Count('comments')
             ).order_by('-pub_date')
