@@ -114,7 +114,7 @@ class ProfileListView(ListView):
         if user == self.request.user:
             user_posts = Post.objects.select_related('author').filter(
                 author__username=self.kwargs['username']
-                ).annotate(
+            ).annotate(
                 comment_count=Count('comments')
             ).order_by('-pub_date')
         else:
@@ -220,8 +220,8 @@ class CategoryListView(ListView):
             is_published=True,
             pub_date__lte=timezone.now()
         ).annotate(
-                comment_count=Count('comments')
-            ).order_by('-pub_date')
+            comment_count=Count('comments')
+        ).order_by('-pub_date')
         return super().get_context_data(
             category=category,
             object_list=post_list,
