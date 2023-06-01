@@ -102,6 +102,7 @@ class Post(BaseModel):
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
+        related_name='categories',
         null=True,
         verbose_name='Категория'
     )
@@ -111,8 +112,8 @@ class Post(BaseModel):
         verbose_name='Фото'
     )
 
-    new_objects = BaseManager()
     objects = models.Manager()
+    new_objects = BaseManager()
 
     class Meta:
         verbose_name = 'публикация'

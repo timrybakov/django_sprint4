@@ -215,7 +215,7 @@ class CategoryListView(ListView):
             slug=self.kwargs['category_slug'],
             is_published=True
         )
-        post_list = Post.objects.select_related('category').filter(
+        post_list = category.categories.filter(
             category__slug=category.slug,
             is_published=True,
             pub_date__lte=timezone.now()
