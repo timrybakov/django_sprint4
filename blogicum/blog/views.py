@@ -30,11 +30,13 @@ class CommentMixin:
 class PostListView(ListView):
     """Главная страница."""
     model = Post
-    queryset = Post.new_objects.new_select_related().annotate(
-        comment_count=Count('comments')
-    ).order_by('-pub_date')
     template_name = 'blog/index.html'
     paginate_by = DEFAULT_VALUE
+
+    def get_queryset(self):
+        return Post.new_objects.new_select_related().annotate(
+            comment_count=Count('comments')
+        ).order_by('-pub_date')
 
 
 class PostCreateView(LoginRequiredMixin, PostMixin, CreateView):
@@ -43,9 +45,6 @@ class PostCreateView(LoginRequiredMixin, PostMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        if form.instance.pub_date > timezone.now():
-            form.instance.is_published = False
-        form.instance.is_published = True
         return super().form_valid(form)
 
     def get_success_url(self):
